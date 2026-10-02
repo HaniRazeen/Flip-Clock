@@ -35,7 +35,7 @@ digits.s2
 
 for (let i = 0; i < 6; i++) {
 
-```
+
 if (
   previousTime !== "" &&
   currentTime[i] !== previousTime[i]
@@ -50,7 +50,7 @@ if (
 }
 
 digitElements[i].textContent = currentTime[i];
-```
+
 
 }
 
