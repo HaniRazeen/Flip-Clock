@@ -2,141 +2,151 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  }
+}
 
 body {
-min-height: 100vh;
-display: flex;
-justify-content: center;
-align-items: center;
-
-background: #0b0b0b;
-color: white;
-
-font-family: Arial, sans-serif;
-}
-
-.clock-container {
-text-align: center;
-}
-
-h1 {
-margin-bottom: 35px;
-font-size: 18px;
-letter-spacing: 6px;
-color: #888;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  background: #171b21;
+  font-family: "Helvetica Neue", Arial, sans-serif;
 }
 
 .clock {
-display: flex;
-align-items: center;
-justify-content: center;
-gap: 10px;
+  --h: clamp(70px, 15vw, 170px);
+  display: flex;
+  align-items: center;
+  gap: calc(var(--h) * 0.15);
 }
 
 .group {
-display: flex;
-gap: 6px;
+  display: flex;
+  gap: calc(var(--h) * 0.06);
 }
 
-.digit {
-position: relative;
+.colon {
+  position: relative;
+  width: calc(var(--h) * 0.1);
+  height: calc(var(--h) * 0.35);
+}
 
-width: 85px;
-height: 105px;
+.colon::before,
+.colon::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #8a94a1;
+}
 
-display: flex;
-justify-content: center;
-align-items: center;
+.colon::before { top: 0; }
+.colon::after { bottom: 0; }
 
-background: linear-gradient(
-to bottom,
-#242424 0%,
-#181818 49%,
-#101010 50%,
-#1e1e1e 100%
-);
+.card {
+  position: relative;
+  width: calc(var(--h) * 0.7);
+  height: var(--h);
+  perspective: calc(var(--h) * 4);
+  color: #e8ecf0;
+  font-weight: 700;
+}
 
-border-radius: 10px;
+.card::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 100%;
+  height: 2px;
+  margin-top: -1px;
+  background: #171b21;
+  z-index: 5;
+}
 
-font-size: 70px;
-font-weight: bold;
-font-family: monospace;
-
-box-shadow:
-0 8px 20px rgba(0, 0, 0, 0.5),
-inset 0 1px rgba(255, 255, 255, 0.05);
-
-overflow: hidden;
+.half {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 50%;
+  overflow: hidden;
+  backface-visibility: hidden;
 }
 
 
-.digit::after {
-content: "";
-
-position: absolute;
-left: 0;
-right: 0;
-top: 50%;
-
-height: 2px;
-
-background: #080808;
-box-shadow: 0 1px rgba(255, 255, 255, 0.05);
+.half span {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: var(--h);
+  line-height: var(--h);
+  text-align: center;
+  font-size: calc(var(--h) * 0.7);
+  font-variant-numeric: tabular-nums;
 }
 
-
-.digit.flip {
-animation: flip 0.5s ease-in-out;
+.top,
+.flip-top {
+  top: 0;
+  background: #2b323b;
+  border-radius: calc(var(--h) * 0.06) calc(var(--h) * 0.06) 0 0;
+  transform-origin: bottom;
 }
 
-@keyframes flip {
-0% {
-transform: perspective(400px) rotateX(0deg);
+.bottom,
+.flip-bottom {
+  top: 50%;
+  background: #222830;
+  border-radius: 0 0 calc(var(--h) * 0.06) calc(var(--h) * 0.06);
+  transform-origin: top;
 }
 
-50% {
-transform: perspective(400px) rotateX(-90deg);
+.bottom span,
+.flip-bottom span {
+  top: calc(var(--h) * -0.5);
 }
 
-100% {
-transform: perspective(400px) rotateX(0deg);
-}
-}
-
-.separator {
-font-size: 60px;
-font-weight: bold;
-color: #777;
-
-padding-bottom: 10px;
+.flip-top,
+.flip-bottom {
+  display: none;
 }
 
-#date {
-margin-top: 30px;
-
-font-size: 15px;
-color: #777;
+.card.flipping .flip-top,
+.card.flipping .flip-bottom {
+  display: block;
 }
 
-@media (max-width: 600px) {
-
-.digit {
-width: 55px;
-height: 70px;
-font-size: 42px;
+.flipping .flip-top {
+  animation: fold 0.3s ease-in both;
 }
 
-.separator {
-font-size: 40px;
+.flipping .flip-bottom {
+  animation: unfold 0.3s 0.3s ease-out both;
 }
 
-.clock {
-gap: 5px;
+@keyframes fold {
+  from { transform: rotateX(0); }
+  to { transform: rotateX(-90deg); }
 }
 
-.group {
-gap: 4px;
-}
+@keyframes unfold {
+  from { transform: rotateX(90deg); }
+  to { transform: rotateX(0); }
 }
 
+.date {
+  color: #7b8591;
+  font-size: 1rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flipping .flip-top,
+  .flipping .flip-bottom {
+    animation-duration: 0.01ms;
+    animation-delay: 0s;
+  }
+}
