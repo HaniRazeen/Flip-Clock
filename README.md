@@ -10,8 +10,7 @@ no frameworks or anything.
 * shows the current time
 * flip animation when a number changes
 * shows the current date
-* works on mobile too
-
+  
 ## why i made it
 
 i wanted to try making a proper flip clock instead of just putting a normal digital clock on a page.
