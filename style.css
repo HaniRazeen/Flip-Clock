@@ -70,7 +70,7 @@ inset 0 1px rgba(255, 255, 255, 0.05);
 overflow: hidden;
 }
 
-/* Middle line */
+
 .digit::after {
 content: "";
 
@@ -85,7 +85,7 @@ background: #080808;
 box-shadow: 0 1px rgba(255, 255, 255, 0.05);
 }
 
-/* Flip animation */
+
 .digit.flip {
 animation: flip 0.5s ease-in-out;
 }
